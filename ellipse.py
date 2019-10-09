@@ -14,7 +14,8 @@ def affine_transf(p):
 
 def project_and_scale(p):
     p = p[0:2,:]
-    t = p/np.linalg.norm(p,axis=0)
+    b = np.sum(p,axis=0)
+    t = (2/3)*b*p/np.linalg.norm(p,axis=0)
     return t
 
 def stereo_projection(t):
@@ -41,11 +42,9 @@ ax  = fig.add_subplot(1,1,1,projection='3d')
 ax.scatter(p[0,:],p[1,:],p[2,:],'b')
 
 q = project_and_scale(p)
-print(q.shape)
-print(np.linalg.norm(q))
-q = scale_ellipse(stereo_projection(q))
+q = stereo_projection(q)
+q=scale_ellipse(q)
 ax.scatter(q[0,:],q[1,:],q[2,:],'r')
-
 plt.show()
 
 #p = np.array([x,2-2*x/3])
