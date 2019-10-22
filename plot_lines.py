@@ -85,6 +85,10 @@ def many_balls(_levels,_mu,folder=''):
 
 def ellipsoid(file_name,levels,mu,plotear=True):
     with open(file_name,'w') as inp:
+        inp.write('1, 0, 0, -1, 1.5, 0, -1, 0, 1.5, -1, 0, 0, -2, '+str(mu)+'\n')
+        inp.write('1, 0, 0, -1, 0, 1.5, -1,-1.5, 0, -1, 0, 0, -2, '+str(mu)+'\n')
+        inp.write('1, 0, 0, -1,-1.5, 0, -1, 0,-1.5, -1, 0, 0, -2, '+str(mu)+'\n')
+        inp.write('1, 0, 0, -1, 0,-1.5, -1, 1.5, 0, -1, 0, 0, -2, '+str(mu)+'\n')
         inp.write('1, 0, 0, 1, 1.5, 0, 1, 0, 1.5, 1, 0, 0, 2, '+str(mu)+'\n')
         inp.write('1, 0, 0, 1, 0, 1.5, 1,-1.5, 0, 1, 0, 0, 2, '+str(mu)+'\n')
         inp.write('1, 0, 0, 1,-1.5, 0, 1, 0,-1.5, 1, 0, 0, 2, '+str(mu)+'\n')
@@ -105,6 +109,7 @@ def ellipsoid(file_name,levels,mu,plotear=True):
     q,coeff,height,classification = ellipse.project_and_scale(p)
     q = ellipse.stereo_projection(q)
     q = ellipse.scale_ellipse(q,coeff,height,classification)
+    #q = np.vstack((q,np.zeros(q.shape[1])))
     np.savetxt(file_name+'.ver',q.T)
     if plotear:
         plot(file_name+'.ver',file_name+'.ebv')    
